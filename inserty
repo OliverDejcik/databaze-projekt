@@ -1,0 +1,65 @@
+ INSERT INTO majitelia (meno_majitela,kontakt)
+	VALUES ("Jan Maly", "janko.maly@gmail.com"),
+			("Jozef Vesely", "jozko.vesely@gmail.com"),
+			("Maros Galbavy", "Marian.galbavy@gmail.com"),
+			("Jan Stastny", "stastny.Jan@gmail.com"),
+			("Milan Svetly", "svetly.mino@gmail.com"),
+			("Svetlana Skulava", "svetlana.shop@gmail.com"),
+			("Adam Maly", "adam.maly@gmail.com"),
+			("Jaromir Zeman", "zemanove.pusky@gmail.com"),
+			("Jano Furman", "janko.furman@gmail.com"),
+			("Tomas Mucha", "tommyguns@gmail.com");
+
+INSERT INTO typy_tovaru (typ_tovaru,nazov_typu)
+	VALUES (1, "zbrane"),
+			 (2, "ochranne prvky"),
+			 (3, "prislusenstvo"),
+			 (4, "oblecenie");
+
+INSERT INTO role_pouzivatelov (rola_pouzivatela,nazov)
+	VALUES (1, "zakaznik"),
+			 (2, "admin"),
+			 (3, "majitel predajne");
+
+INSERT INTO predajne (nazov_predajne,adresa_predajne,id_majitela)	
+		VALUES ("Gunshop Oscadnica", "Oscadnica,Centrum 8",1),
+			("Polovnictvo Vesely","Cadca,Okruzna 21" ,2),
+			("Pro airsoft shop", "Zilina,Bratislavska 45",3),
+			("Army shop", "Bratislava,Antona Bernolaka ",4),
+			("Polovnicke potreby", "Zvolen, M. R. Stefanika 2558/8 ",5),
+			("Gunshop pri moste", "Bytca,Kosicka 4",6),
+			("Airsoft shop Adam", "Kosice,Rastislavova 7",7),
+			("Zemanove pusky", "Trencin,Bernolakova 8",8),
+			("Furmanove pistole", "Banska Bystrica,Okruzna 12",9),
+			("Tommy Guns", "Cadca,Palarikova 69",10);
+
+INSERT INTO objednavky (id_pouzivatela,id_predajne,datum_uzavreteho_obchodu)	
+		VALUES (15, 1,2000-12-12),
+			(8, 8 ,2008-04-04),
+			(8, 8 ,2001-07-02),
+			(4, 12 ,2019-12-01),
+			(15, 15 ,2015-06-25),
+			(4, 11 ,2003-05-12),
+			(4, 11 ,2020-11-25),
+			(15, 5 ,2020-12-05),
+			(15, 6 ,2021-02-04),
+			(4, 8 ,2021-02-05),
+
+
+
+INSERT INTO users(meno,cislo_OP,cislo_zbrojneho_preukazu,vek,rola_pouzivatela)
+			VALUES ("Jan Maly", "CG745123", "BL84512",3),
+			("Jaroslav Jaros","TG278565", "AT45218", 24 ,2),
+			("Jozef Vesely", "BN742356", "AH78574",29 ,3),
+			("Jan Hrach", "SB785874 ", "NP52179" , 45,1),
+			("Maros Galbavy", "Zvolen, M. R. Stefanika 2558/8 ",3),
+			("Jan Stastny", "BH784523", "RF74396", 56 ,3),
+			("Richard Faktor","JU628595" , "CH85968" ,18,1),
+			("Milan Svetly", "BH587412", "AG75136",26 ,3),
+			("Svetlana Skulava", "CF856248","AT78542",49 ,3),
+			("Adam Maly", "FR785412", "QW75421",38,3),
+			("Jaromir Zeman", "ED784395", "GH70365",25,3),
+			("Jano Furman", "TZ896325", "FE89425" , 68, 3),
+			("Tomas Mucha", "TH584369" , "HU78542", 48, 3),
+			("John Murcin", "AG584254","TF25196",18,2),
+			("Jakub Vlasaty", "HV789421", "HG58124",25,1);
