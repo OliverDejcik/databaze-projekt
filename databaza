@@ -1,0 +1,65 @@
+CREATE TABLE `users` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `meno` varchar(255),
+  `cislo_OP` varchar(255),
+  `cislo_zbrojneho_preukazu` varchar(255),
+  `vek` integer,
+  `rola_pouzivatela` integer
+);
+
+CREATE TABLE `role_pouzivatelov` (
+  `rola_pouzivatela` int,
+  `nazov` varchar(255)
+);
+
+CREATE TABLE `tovar` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `nazov_tovaru` varchar(255),
+  `typ_tovaru` int,
+  `popis_tovaru` text,
+  `cena` int
+);
+
+CREATE TABLE `typy_tovaru` (
+  `typ_tovaru` int,
+  `nazov_typu` varchar(255)
+);
+
+CREATE TABLE `predajne` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `nazov_predajne` varchar(255),
+  `adresa_predajne` VARCHAR(255),
+  `id_majitela` int
+);
+
+CREATE TABLE `majitelia` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `meno_majitela` varchar(255),
+  `kontakt` varchar(255)
+);
+
+CREATE TABLE `objednavky` (
+  `id_objednavky` int PRIMARY KEY AUTO_INCREMENT,
+  `id_pouzivatela` int,
+  `id_predajne` int,
+  `datum_uzavreteho_obchodu` date
+);
+
+CREATE TABLE `objednany_tovar` (
+  `id_objednavky` int,
+  `id_tovaru` int
+);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`rola_pouzivatela`) REFERENCES `role_pouzivatelov` (`rola_pouzivatela`);
+
+ALTER TABLE `tovar` ADD FOREIGN KEY (`typ_tovaru`) REFERENCES `typy_tovaru` (`typ_tovaru`);
+
+ALTER TABLE `predajne` ADD FOREIGN KEY (`id_majitela`) REFERENCES `majitelia` (`id`);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `objednavky` (`id_pouzivatela`);
+
+ALTER TABLE `predajne` ADD FOREIGN KEY (`id`) REFERENCES `objednavky` (`id_predajne`);
+
+ALTER TABLE `objednany_tovar` ADD FOREIGN KEY (`id_objednavky`) REFERENCES `objednavky` (`id_objednavky`);
+
+ALTER TABLE `objednany_tovar` ADD FOREIGN KEY (`id_tovaru`) REFERENCES `tovar` (`id`);
