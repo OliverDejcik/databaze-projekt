@@ -1,0 +1,29 @@
+/*
+1.
+SELECT AVG(cena) FROM tovar;
+
+SELECT id_pouzivatela, COUNT(*) AS pocet_objednavok FROM vybavene_objednavky GROUP BY id_pouzivatela ORDER BY pocet_objednavok DESC; 
+
+SELECT meno FROM pouzivatelia GROUP BY meno ORDER BY meno;
+
+SELECT adresa_predajne FROM predajne ORDER BY adresa_predajne;
+
+2.
+
+SELECT id_pouzivatela,datum_uzavreteho_obchodu FROM vybavene_objednavky WHERE id_pouzivatela BETWEEN 4 AND 9;
+
+SELECT id,meno FROM pouzivatelia WHERE meno LIKE "J%";
+
+3.
+
+SELECT nazov_tovaru,cena FROM tovar GROUP BY nazov_tovaru ORDER BY cena LIMIT 1;
+
+SELECT COUNT(*) FROM pouzivatelia WHERE meno LIKE "A%";
+
+SELECT id,nazov_tovaru, SUM(cena/2) AS polovicna_cena  FROM tovar GROUP BY id HAVING polovicna_cena < 200;
+
+4.
+
+SELECT * FROM pouzivatelia JOIN vybavene_objednavky ON id_pouzivatela = id HAVING vek > 40;
+*/
+
