@@ -1,0 +1,186 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+CREATE DATABASE IF NOT EXISTS `obchod so zbranami` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `obchod so zbranami`;
+
+CREATE TABLE IF NOT EXISTS `majitelia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `meno_majitela` varchar(255) DEFAULT NULL,
+  `kontakt` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `majitelia` DISABLE KEYS */;
+INSERT INTO `majitelia` (`id`, `meno_majitela`, `kontakt`) VALUES
+	(1, 'Jan Kozak', '0945785214'),
+	(2, 'Frantisek Vesely', '0985698145'),
+	(3, 'Tomas Vlasaty', '095968167'),
+	(4, 'Radoslav Mrkvicka', '09143279'),
+	(5, 'Jakub Havel', '0919873452'),
+	(6, 'Jaroslav Miler', '0927856143'),
+	(7, 'Peter Stastny', '0926452365'),
+	(8, 'Michal Gomolka', '0984521756'),
+	(9, 'Filip Konecny', '0954248652'),
+	(10, 'David Smith', '0954254856');
+/*!40000 ALTER TABLE `majitelia` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `objednany_tovar` (
+  `id_objednavky` int(11) NOT NULL AUTO_INCREMENT,
+  `id_tovaru` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_objednavky`) USING BTREE,
+  KEY `tovaris` (`id_tovaru`),
+  CONSTRAINT `tovaris` FOREIGN KEY (`id_tovaru`) REFERENCES `tovar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `objednany_tovar` DISABLE KEYS */;
+INSERT INTO `objednany_tovar` (`id_objednavky`, `id_tovaru`) VALUES
+	(7, 1),
+	(8, 3),
+	(9, 3),
+	(4, 5),
+	(10, 6),
+	(2, 7),
+	(6, 7),
+	(1, 8),
+	(3, 9),
+	(5, 10);
+/*!40000 ALTER TABLE `objednany_tovar` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `pouzivatelia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `meno` varchar(255) DEFAULT NULL,
+  `cislo_OP` varchar(255) DEFAULT NULL,
+  `cislo_zbrojneho_preukazu` varchar(255) DEFAULT NULL,
+  `vek` int(11) DEFAULT NULL,
+  `rola_pouzivatela` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `pouzivatelia` DISABLE KEYS */;
+INSERT INTO `pouzivatelia` (`id`, `meno`, `cislo_OP`, `cislo_zbrojneho_preukazu`, `vek`, `rola_pouzivatela`) VALUES
+	(1, 'Jan Kozak', 'JH458258', 'ABD78452', 25, 2),
+	(2, 'Adrian Bakos', 'JH454587', 'GDB87364', 21, 1),
+	(3, 'Rastislav Cyprich', 'JK128258', 'EDR78451', 39, 3),
+	(4, 'Frantisek Vesely', 'HG482148', 'JNA84715', 18, 2),
+	(5, 'Tomas Vlasaty', 'DM754318', 'TFS74513', 32, 2),
+	(6, 'Adam Cobrda', 'FD754396', 'RFD74512', 61, 3),
+	(7, 'Samuel Beran', 'JJ851264', 'UJH94318', 45, 3),
+	(8, 'Radoslav Mrkvicka', 'TG845316', 'ERD78431', 29, 2),
+	(9, 'Jakub Havel', 'UJ845128', 'SRD74519', 35, 2),
+	(10, 'Jaroslav Miler', 'ZH746132', 'RDF74913', 68, 2),
+	(11, 'Peter Stastny', 'GG845213', 'TGH54961', 23, 2),
+	(12, 'Jakub Cibula', 'GH785214', 'RDE78491', 42, 3),
+	(13, 'Michal Gomolka', 'VF754312', 'OJH74196', 38, 2),
+	(14, 'Filip Konecny', 'ED745129', 'IJK84715', 19, 2),
+	(15, 'David Smith', 'CD451278', 'OKL78316', 66, 2);
+/*!40000 ALTER TABLE `pouzivatelia` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `predajne` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazov_predajne` varchar(255) DEFAULT NULL,
+  `adresa_predajne` varchar(150) DEFAULT NULL,
+  `id_majitela` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `majitelia` (`id_majitela`),
+  CONSTRAINT `majitelia` FOREIGN KEY (`id_majitela`) REFERENCES `majitelia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `predajne` DISABLE KEYS */;
+INSERT INTO `predajne` (`id`, `nazov_predajne`, `adresa_predajne`, `id_majitela`) VALUES
+	(1, 'Polovnictvo cadca', 'Fraňa Kráľa 1504, 022 01 Čadca', 1),
+	(2, 'Army shop', 'Palárikova 24, 022 26 Čadca', 3),
+	(3, 'Pro airsoft shop', 'Sládkovičova 1700, 022 01 Čadca', 5),
+	(4, 'Tommy guns', 'Námestie Andreja Hlinku 7B, 010 01 Žilina', 4),
+	(5, 'Polovnictvo zilina', 'Jozefa Vuruma č. 6, 010 01 Žilina', 9),
+	(6, 'Gun shop', 'Pilárikova 7372/5, 811 03 Bratislava', 7),
+	(7, 'New guns', 'Dunajská 2, 811 08 Bratislava', 10),
+	(8, 'Polovnictvo Oscadnica', 'Námestie M. Bernáta TIK, 023 01 Oščadnica', 2),
+	(9, 'All for airsoft', 'Daxnerova 665, 036 01 Martin', 8),
+	(10, 'Pro gun shop', 'Námestie svätého Egídia 3290/124, 058 01 Poprad', 6);
+/*!40000 ALTER TABLE `predajne` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `role_pouzivatelov` (
+  `rola_pouzivatela` int(11) DEFAULT NULL,
+  `nazov` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `role_pouzivatelov` DISABLE KEYS */;
+INSERT INTO `role_pouzivatelov` (`rola_pouzivatela`, `nazov`) VALUES
+	(1, 'admin'),
+	(2, 'majtel predajne'),
+	(3, 'zakaznik');
+/*!40000 ALTER TABLE `role_pouzivatelov` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `tovar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nazov_tovaru` varchar(255) DEFAULT NULL,
+  `typ_tovaru` int(11) DEFAULT NULL,
+  `popis_tovaru` text DEFAULT NULL,
+  `cena` float DEFAULT NULL,
+  `id_predajne` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `tovar` DISABLE KEYS */;
+INSERT INTO `tovar` (`id`, `nazov_tovaru`, `typ_tovaru`, `popis_tovaru`, `cena`, `id_predajne`) VALUES
+	(1, 'Ak 47 Kalashnikov', 1, 'Kaliber 7,62x39mm -- kadencia: 600 -- ustova rychlost 715 m/s -- kapacita 30 nabojov', 800, 1),
+	(2, 'Beretta 90TWO AGCO2', 2, 'CO2 -- Energia: do 1J -- Naboje: 6mm BB -- ustova rychlost 140 m/s -- kapacita zasobnika: 15 ', 75, 9),
+	(3, 'RED OPS 7.62X39 124 GRAIN FMJ', 3, 'Kaliber 7,62x39mm -- Full metal jacket -- pusny prach: 8,04 gramov ', 0.45, 1),
+	(4, 'Airsoft guličky BBs 0,12g 1000 ks 6mm ROYAL', 4, 'Kaliber 6mm -- farba: biela -- 1000ks', 2.28, 5),
+	(5, 'Airsoft Rifle Arsenal ASG SLR AK 105 AEG 6mm', 2, 'AEG elektrika -- Energia: do 0,2J -- Naboje: 6mm BB -- ustova rychlost: 43m/s -- kapacita zasobnika: 420', 52, 2),
+	(6, 'Airsoft sniperka G & G GR14 H.B.A long, AEG', 2, 'AEG elektrika -- Energia do 1,2J -- Naboje: 6mm BB -- ustova rychlost: 217m/s -- kapacita: 470 ', 428, 5),
+	(7, 'BLAZER 9MM 115 GRAIN FMJ', 3, 'Kaliber 9mm -- Full metal jacket -- pusny prach 7,45 gramov ', 0.46, 8),
+	(8, 'KCI GLOCK 19 9MM MAGAZINE - 15 ROUND (BLACK POLYMER)', 3, 'Kaliber 9mm -- Pre Glock 19 -- Kapacita: 15', 12.99, 8),
+	(9, 'GLOCK 19 - GEN3/4 - 9MM', 1, 'Kaliber 9mm -- ustova rychlost 600 m/s -- kapacita: 15 nabojov', 440, 8),
+	(10, 'Airsoft zásobník Armalite M4/M16 GREY AEG 85BB LowCap', 4, 'Kaliber 6mm -- Pre m4/m16 -- Kapacita: 85', 5.98, 2);
+/*!40000 ALTER TABLE `tovar` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `typy_tovaru` (
+  `typ_tovaru` int(11) DEFAULT NULL,
+  `nazov_typu` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `typy_tovaru` DISABLE KEYS */;
+INSERT INTO `typy_tovaru` (`typ_tovaru`, `nazov_typu`) VALUES
+	(1, 'strelne zbrane'),
+	(2, 'airosft zbrane'),
+	(3, 'prislusenstvo pre strelne zbrane'),
+	(4, 'prislusenstvo pre airosft');
+/*!40000 ALTER TABLE `typy_tovaru` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `vybavene_objednavky` (
+  `id_objednavky` int(11) DEFAULT NULL,
+  `id_pouzivatela` int(11) DEFAULT NULL,
+  `id_predajne` int(11) DEFAULT NULL,
+  `datum_uzavreteho_obchodu` date DEFAULT NULL,
+  KEY `pouzivatelia` (`id_pouzivatela`),
+  KEY `predajna` (`id_predajne`),
+  KEY `objednafki` (`id_objednavky`),
+  CONSTRAINT `objednafki` FOREIGN KEY (`id_objednavky`) REFERENCES `objednany_tovar` (`id_objednavky`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `pouzivatelia` FOREIGN KEY (`id_pouzivatela`) REFERENCES `pouzivatelia` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `predajna` FOREIGN KEY (`id_predajne`) REFERENCES `predajne` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*!40000 ALTER TABLE `vybavene_objednavky` DISABLE KEYS */;
+INSERT INTO `vybavene_objednavky` (`id_objednavky`, `id_pouzivatela`, `id_predajne`, `datum_uzavreteho_obchodu`) VALUES
+	(1, 3, 8, '2021-04-22'),
+	(2, 3, 8, '2021-04-25'),
+	(3, 3, 8, '2021-04-25'),
+	(4, 6, 2, '2021-07-01'),
+	(5, 6, 2, '2021-07-01'),
+	(6, 3, 8, '2021-07-05'),
+	(7, 7, 1, '2021-08-20'),
+	(8, 7, 1, '2021-08-20'),
+	(9, 7, 1, '2021-08-20'),
+	(10, 12, 5, '2021-12-05');
+/*!40000 ALTER TABLE `vybavene_objednavky` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
